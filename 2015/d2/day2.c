@@ -32,11 +32,9 @@ int main()
         // Split the line into tokens: l w h
         sscanf(line, "%dx%dx%d", &l, &w, &h);
         // Check the values
-        printf("l: %d, w: %d, h: %d\n", l, w, h);
         totalSquareFeet += ((2 * l * w) + (2 * w * h) + (2 * h * l));
 
         // Find total square feet
-        printf("Sum total square feet: %d\n", totalSquareFeet);
 
         // Find the smallest side
         int min = l*w;
@@ -49,9 +47,7 @@ int main()
             min = h*l;
         }
 
-        printf("Smallest side: %d\n", min);
         totalSquareFeet += min;
-        printf("Adjusted total square feet: %d\n", totalSquareFeet);
     }
 
     printf("Total square feet of wrapping paper: %d\n", totalSquareFeet);
