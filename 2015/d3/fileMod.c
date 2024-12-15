@@ -20,21 +20,26 @@ int main()
         return EXIT_FAILURE;
     }
 
-    int target_floor = 0;
-
     while ((ch = fgetc(file_ptr)) != EOF)
     {
-        if (ch == '(')
+        switch (ch)
         {
-            target_floor++;
-        }
-        else if (ch == ')')
-        {
-            target_floor--;
+        case '^':
+            printf("U\n");
+            break;
+        case 'v':
+            printf("D\n");
+            break;
+        case '<':
+            printf("L\n");
+            break;
+        case '>':
+            printf("R\n");
+            break;
+        default:
+            break;
         }
     }
-
-    printf("The target floor is: %d\n", target_floor);
 
     fclose(file_ptr);
 
