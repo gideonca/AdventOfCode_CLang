@@ -100,12 +100,14 @@ int main()
     char *content = getFileContent();
     printf("Content: %s\n", content);
 
+    // Split the content into two routes
     int split_route = strlen(content);
 
     // Create char arrays for Santa and Robo-Santa
     char *santa_route = malloc((split_route / 2 + 1) * sizeof(char));
     char *robo_santa_route = malloc((split_route / 2 + 1) * sizeof(char));
 
+    // Check if memory allocation failed
     if (santa_route == NULL || robo_santa_route == NULL)
     {
         printf("Memory allocation failed\n");
@@ -125,6 +127,8 @@ int main()
             robo_santa_route[i / 2] = content[i];
         }
     }
+
+    // Null-terminate the routes
     santa_route[split_route / 2] = '\0';
     robo_santa_route[split_route / 2] = '\0';
 
@@ -132,13 +136,77 @@ int main()
     printf("Santa's route: %s\n", santa_route);
     printf("Robo-Santa's route: %s\n", robo_santa_route);
 
-    // for (int i = 0; i < strlen(content); i++)
-    // {
-    // }
+    for (int i = 0; i < split_route / 2; i++)
+    {
+        char direction = santa_route[i];
 
+        switch (direction)
+        {
+        case '^':
+            currentPosition.y += 1;
+            break;
+        case 'v':
+            currentPosition.y -= 1;
+            break;
+        case '<':
+            currentPosition.x -= 1;
+            break;
+        case '>':
+            currentPosition.x += 1;
+            break;
+        default:
+            printf("Invalid direction: %c\n", direction);
+        }
+
+        // Check if the current position has been visited
+        if (!isPointVisited(visited, numVisited, currentPosition))
+        {
+            visited[numVisited] = currentPosition;
+            numVisited++;
+        }
+    }
+
+    // Reset the current position
+    currentPosition.x = 0;
+    currentPosition.y = 0;
+
+    // Process Robo-Santa's route
+    for (int i = 0; i < split_route / 2; i++)
+    {
+        char direction = robo_santa_route[i];
+
+        switch (direction)
+        {
+        case '^':
+            currentPosition.y += 1;
+            break;
+        case 'v':
+            currentPosition.y -= 1;
+            break;
+        case '<':
+            currentPosition.x -= 1;
+            break;
+        case '>':
+            currentPosition.x += 1;
+            break;
+        default:
+            printf("Invalid direction: %c\n", direction);
+        }
+
+        // Check if the current position has been visited
+        if (!isPointVisited(visited, numVisited, currentPosition))
+        {
+            visited[numVisited] = currentPosition;
+            numVisited++;
+        }
+    }
+
+    // Free the allocated memory
     free(content);
     free(santa_route);
     free(robo_santa_route);
+
+    printf("Number of unique stops: %d\n", numVisited);
 
     return 0;
 }
