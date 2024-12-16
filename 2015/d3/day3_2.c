@@ -90,7 +90,6 @@ int main()
     int numDirections;
 
     // Array to store visited points
-    Point visited[100000]; // Adjust size as needed
     int numVisited = 0;
 
     Point currentPosition = {0, 0}; // Start at origin
@@ -99,6 +98,10 @@ int main()
 
     char *content = getFileContent();
     printf("Content: %s\n", content);
+
+    // Array to store visited points
+    int size = strlen(content);
+    Point *visited = malloc(size * sizeof(Point));
 
     // Split the content into two routes
     int split_route = strlen(content);
