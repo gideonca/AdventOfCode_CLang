@@ -1,28 +1,34 @@
 import java.security.MessageDigest
+import scala.annotation.tailrec
 
 object Day4 {
     def main(args: Array[String]): Unit = {
-        var hashInput = "ckczppom"
-        var number = 1
-        var hash = ""
-
-        while( true ) {
-            val combined = hashInput + number.toString
-            hash = md5(combined)
-
-            if (hash.startsWith("00000")) {
-                println("Part 1: " + number)
-                if (hash.startsWith("000000")) {
-                    println("Part 2: " + number)
-                    return
-                }
-            }
-            number+=1
-        }
+        val hashInput = "ckczppom"
+        val number = findLowestNumber(hashInput, "00000")
+        println(s"The lowest positive number with 5 leading zeroes is: $number")
+        val number2 = findLowestNumber(hashInput, "000000")
+        println(s"The lowest positive number with 6 leading zeroes is: $number2")
     }
 
-    def md5(s: String): String = {
+    def findLowestNumber(hashInput: String, leadingZeroes: String): Int = {
         val md = MessageDigest.getInstance("MD5")
-        md.digest(s.getBytes).map("%02x".format(_)).mkString
+        val sb = new StringBuilder
+
+        @tailrec
+        def loop(number: Int): Int = {
+            sb.clear()
+            sb.append(hashInput).append(number)
+            val hash = md5(sb.toString, md)
+            if (hash.startsWith(leadingZeroes)) { number }
+            else loop(number + 1)
+        }
+
+            loop(1)
+        }
+
+    def md5(s: String, md: MessageDigest): String = {
+        md.update(s.getBytes)
+        val digest = md.digest()
+        digest.map("%02x".format(_)).mkString
     }
 }
