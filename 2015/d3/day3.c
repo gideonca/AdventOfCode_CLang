@@ -102,6 +102,7 @@ int main()
     int size = strlen(content);
     Point *visited = malloc(size * sizeof(Point));
 
+    // TODO: Replace this with a map instead of loop
     for (int i = 0; i < strlen(content); i++)
     {
         char direction = content[i];
