@@ -1,3 +1,12 @@
 */*/*.exe
 */*/*.txt
+*/*/*.tasty
+*/*/*.class
+*/*/.scala-build
+*/*/.bsp
+*/*/*.ilk
+*/*/*.pdb
 .vscode
+.metals
+.scala-build
+.bsp
